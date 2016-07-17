@@ -1,0 +1,9 @@
+Install Echo web framework
+go get -u github.com/labstack/echo
+
+Install Gorm
+go get -u github.com/jinzhu/gorm
+
+Migration tool
+https://github.com/DavidHuie/gomigrate
+
