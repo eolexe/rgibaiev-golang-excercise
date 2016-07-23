@@ -4,6 +4,12 @@ go get -u github.com/labstack/echo
 Install Gorm
 go get -u github.com/jinzhu/gorm
 
+Install MySQL driver for Go
+go get github.com/go-sql-driver/mysql
+
 Migration tool
 https://github.com/DavidHuie/gomigrate
+
+Logger
+go get -u github.com/Sirupsen/logrus
 
