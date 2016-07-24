@@ -8,6 +8,9 @@ import (
 type User struct {
 	gorm.Model
 	Login  string
+	FirstName string
+	LastName string
+	email string
 }
 
 type Task struct {

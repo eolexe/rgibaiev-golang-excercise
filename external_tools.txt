@@ -8,7 +8,9 @@ Install MySQL driver for Go
 go get github.com/go-sql-driver/mysql
 
 Migration tool
-https://github.com/DavidHuie/gomigrate
+go get github.com/mattes/migrate
+To create migration:
+migrate -url mysql://golang_root:golang_root@/golang_exercise -path ./migrations create 2016_07_24
 
 Logger
 go get -u github.com/Sirupsen/logrus
