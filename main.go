@@ -12,7 +12,10 @@ import (
 	"net/http"
 	"github.com/labstack/echo/engine/standard"
 	"strconv"
+	_ "encoding/json"
 )
+
+var db *gorm.DB
 
 func hello(c echo.Context) error {
 	log.WithFields(
@@ -38,9 +41,30 @@ func add(c echo.Context) error {
 	return c.String(http.StatusOK, strconv.Itoa(i + 10))
 }
 
+func new_user(c echo.Context) error {
+	u := models.User{}
+	err := c.Bind(u)
+	if err != nil {
+		return c.String(http.StatusBadRequest, "Invalid parameters passed: " + err.Error())
+	} else {
+		fmt.Printf(u.Login)
+		return c.String(http.StatusOK, u.Login)
+	}
+}
+
+
+func add_to_db(c echo.Context) error {
+	first_name := "First Name"
+	row := models.User{Login : "myLogin", FirstName : &first_name}
+	db.NewRecord(row)
+	db.Create(&row)
+	return c.String(http.StatusOK, "OK!")
+}
+
 func main() {
 	// DB setup
-	db, err := gorm.Open("mysql", "golang_root:golang_root@/golang_exercise")
+	var err error
+	db, err = gorm.Open("mysql", "golang_root:golang_root@/golang_exercise")
 	//_, err := gorm.Open("mysql", "golang_root:golang_root@/golang_exercise")
 	if err != nil {
 		fmt.Print("Couldn't connect to the DB")
@@ -64,6 +88,8 @@ func main() {
 	e := echo.New()
 	e.GET("/", hello)
 	e.GET("/add/:a/", add)
+	e.GET("/save/", add_to_db)
+	e.POST("/users/add", new_user)
 	e.Run(standard.New(":1323"))
 
 	// Create table
